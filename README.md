@@ -3,9 +3,9 @@
 This is a basic list of few questions &amp; there answers. I'll list down actual question which comes in actual interview situations.
 There will be different categories of questions. I'll try to cover as much as possible. (DS & Algo, Javascript, Typescript, React, Vue, Node, Express, Next.JS, etc.)
 
-- [**DS & Algo**](#dsa)
+- [**DS & Algo**](#ds&algo)
 
-## Actual Interview Questions
+## DS & Algo
 
 #### 1. There is a Number input, you need to reverse the number without converting it to string. For example, if the input is `1234`, the output should be `4321`.
 
@@ -92,3 +92,5 @@ console.log(findPairs(arr, target)); // [[1, 3], [-1, 5], [-2, 6]]
 </p>
 
 </details>
+
+---
