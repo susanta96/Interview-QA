@@ -3,9 +3,10 @@
 This is a basic list of few questions &amp; there answers. I'll list down actual question which comes in actual interview situations.
 There will be different categories of questions. I'll try to cover as much as possible. (DS & Algo, Javascript, Typescript, React, Vue, Node, Express, Next.JS, etc.)
 
-- [**DS & Algo**](#ds&algo)
+- [**DSA**](#dsa)
+- [**Javascript Questions**](#javascript-questions)
 
-## DS & Algo
+## DSA
 
 #### 1. There is a Number input, you need to reverse the number without converting it to string. For example, if the input is `1234`, the output should be `4321`.
 
@@ -94,3 +95,154 @@ console.log(findPairs(arr, target)); // [[1, 3], [-1, 5], [-2, 6]]
 </details>
 
 ---
+
+## Javascript Questions
+
+#### 1. Lets say you have 5 promises and you want to get the promise with exactly 2 promises results. How will you do that? Besically, you need to write a function which can accept array of promises like `Promise.all` and how many exact result you want, then function will return a promise as soon as 2 of the promises got resolved, maybe some promises can reject also, ignore those.
+
+```js
+const promises = [
+  delayPromise(100, "Promise 1"),
+  delayPromise(200, "Promise 2"),
+  delayPromise(0, "Promise 3"),
+  delayPromise(300, "Promise 4"),
+  delayPromise(150, "Promise 5"),
+];
+
+function delayPromise(ms, data) {
+  return new Promise((resolve) => setTimeout(() => resolve(data), ms));
+}
+// Write this promiseSome function
+promiseSome(promises, 2)
+  .then((result) => {
+    console.log(result); // Output: ['Promise 3', 'Promise 1']
+  })
+  .catch((error) => {
+    console.error(error); // Most of the time, it will not go to catch block
+  });
+```
+
+<details><summary><b>Answer</b></summary>
+<p>
+
+##### This function is similar to `Promise.all` but it will resolve as soon as 2 promises got resolved.
+
+```js
+function promiseSome(promises, count) {
+  return new Promise((resolve, reject) => {
+    if (!Array.isArray(promises) || !Number.isInteger(count) || count <= 0) {
+      reject(new Error("Invalid input"));
+      return;
+    }
+
+    const results = [];
+    let fulfilledCount = 0;
+
+    function checkCompletion() {
+      if (fulfilledCount === count) {
+        resolve(results);
+      }
+    }
+
+    promises.forEach((promise, index) => {
+      promise
+        .then((data) => {
+          results[index] = data;
+          fulfilledCount++;
+
+          // Check if we have filled the results array with non-null values
+          if (results.filter((item) => item !== null).length === count) {
+            checkCompletion();
+          }
+        })
+        .catch((error) => {
+          // Fill with null if promise is rejected
+          results[index] = null;
+          fulfilledCount++;
+
+          // Check if we have filled the results array with non-null values
+          if (results.filter((item) => item !== null).length === count) {
+            checkCompletion();
+          }
+        });
+    });
+  });
+}
+```
+
+</p>
+
+</details>
+
+---
+
+#### 2. There is an array of objects, you need to sort the array based on the object property. For example, if the array is
+
+```js
+const inputArray = [
+  { name: "susanta", age: 27 },
+  { name: "ayan", age: 28 },
+  { name: "avik", age: 26 },
+  { name: "souvik", age: 25 },
+];
+```
+
+you need to sort the array based on the `age` property. I want to sort the array in asending order of age.
+
+<details><summary><b>Answer</b></summary>
+<p>
+
+##### This solution is using `sort` method of array. Other approach can be sorting function using `bubble sort` or `merge sort` or `quick sort`.
+
+```js
+// Sort array based on key using JS sort method
+function sortArray(arr, key) {
+  return arr.sort((a, b) => a[key] - b[key]);
+}
+
+console.log(sortArray(inputArray, "age"));
+```
+
+```js
+// Bubble sort approach
+let bubbleSort = (inputArr, key) => {
+  let len = inputArr.length;
+  for (let i = 0; i < len; i++) {
+    for (let j = 0; j < len; j++) {
+      if (inputArr[j][key] > inputArr[j + 1]?.[key]) {
+        let tmp = inputArr[j];
+        inputArr[j] = inputArr[j + 1];
+        inputArr[j + 1] = tmp;
+      }
+    }
+  }
+  return inputArr;
+};
+
+console.log(bubbleSort(inputArray, "age"));
+```
+
+</p>
+
+</details>
+
+---
+
+#### 3. Code Snippet is provided , let me know the output.
+
+```js
+const mystery = new Array(3)
+  .fill(2)
+  .map((x, y) => x + y)
+  .filter((x) => x % 2 === 0);
+
+console.log(mystery);
+```
+
+<details><summary><b>Answer</b></summary>
+<p>
+
+##### Output will be `[2, 4]`, because `new Array(3).fill(2)` will create an array of length 3 with value 2. Then `map` function will add index with value, so it will be `[2, 3, 4]`. Then `filter` function will filter out odd numbers, so it will be `[2, 4]`.
+
+</p>
+</details>
