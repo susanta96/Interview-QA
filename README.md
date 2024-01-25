@@ -246,3 +246,36 @@ console.log(mystery);
 
 </p>
 </details>
+
+---
+
+#### 4. Remove the duplicate number from an Array in JS.
+
+```js
+const arr = [2, 2, 3, 4, 9, 6, 4, 3];
+// out put should be [2,3,4,9,6]
+```
+
+<details><summary><b>Answer</b></summary>
+<p>
+
+##### Output will be `[2, 3, 4, 9, 6]`, because `new Set(arr)` will create a set of unique values, then `Array.from` will convert the set to array.
+
+```js
+const arr = [2, 2, 3, 4, 9, 6, 4, 3];
+const uniqueArray = [...new Set(arr)];
+console.log(uniqueArray); // [2, 3, 4, 9, 6]
+```
+
+##### Another method using `filter` function
+
+```js
+const arr = [2, 2, 3, 4, 9, 6, 4, 3];
+const uniqueArray = arr.filter((element, index) => {
+  return arr.indexOf(element) === index;
+});
+console.log(uniqueArray); // [2, 3, 4, 9, 6]
+```
+
+</p>
+</details>
